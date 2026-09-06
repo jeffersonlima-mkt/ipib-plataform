@@ -87,6 +87,9 @@
                 <div style="font-size:12.5px; font-weight:600; line-height:1.2;">{{ user }}</div>
                 <div style="font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:0.14em; color:var(--faint,rgba(7,35,43,0.42)); margin-top:3px;">{{ roleLabel }}</div>
               </div>
+              <button onClick="{{ openMyPassword }}" title="Alterar minha senha" style="width:26px; height:26px; display:flex; align-items:center; justify-content:center; background:transparent; border:none; border-radius:6px; color:var(--faint,rgba(7,35,43,0.42)); cursor:pointer;" style-hover="color:var(--text,#07232b);">
+                <span class="ms" style="font-size:16px;">key</span>
+              </button>
               <button onClick="{{ doLogout }}" title="Sair" style="width:26px; height:26px; display:flex; align-items:center; justify-content:center; background:transparent; border:none; border-radius:6px; color:var(--faint,rgba(7,35,43,0.42)); cursor:pointer;" style-hover="color:var(--text,#07232b);">
                 <span class="ms" style="font-size:16px;">logout</span>
               </button>
@@ -488,6 +491,13 @@
                     <button onClick="{{ pp.go }}" style="padding:6px 11px; background:{{ pp.bg }}; border:1px solid {{ pp.border }}; border-radius:7px; color:{{ pp.fg }}; font-size:11px; font-weight:600; cursor:pointer;">{{ pp.label }}</button>
                   </sc-for>
                 </span>
+                <sc-if value="{{ cultoShowYearNav }}">
+                  <span style="display:flex; align-items:center; gap:6px;">
+                    <button onClick="{{ cultoYearPrev }}" style="width:24px; height:24px; display:flex; align-items:center; justify-content:center; background:transparent; border:1px solid var(--line,rgba(7,35,43,0.16)); border-radius:6px; color:var(--text,#07232b); cursor:pointer;"><span class="ms" style="font-size:15px;">chevron_left</span></button>
+                    <span style="font-size:12px; font-weight:700; min-width:38px; text-align:center;">{{ cultoYearLabel }}</span>
+                    <button onClick="{{ cultoYearNext }}" style="width:24px; height:24px; display:flex; align-items:center; justify-content:center; background:transparent; border:1px solid var(--line,rgba(7,35,43,0.16)); border-radius:6px; color:var(--text,#07232b); cursor:pointer;"><span class="ms" style="font-size:15px;">chevron_right</span></button>
+                  </span>
+                </sc-if>
               </div>
             </div>
             <sc-if value="{{ cultoHasData }}" hint-placeholder-val="{{ true }}">
@@ -529,6 +539,13 @@
                     <button onClick="{{ pp.go }}" style="padding:6px 11px; background:{{ pp.bg }}; border:1px solid {{ pp.border }}; border-radius:7px; color:{{ pp.fg }}; font-size:11px; font-weight:600; cursor:pointer;">{{ pp.label }}</button>
                   </sc-for>
                 </span>
+                <sc-if value="{{ ebdShowYearNav }}">
+                  <span style="display:flex; align-items:center; gap:6px;">
+                    <button onClick="{{ ebdYearPrev }}" style="width:24px; height:24px; display:flex; align-items:center; justify-content:center; background:transparent; border:1px solid var(--line,rgba(7,35,43,0.16)); border-radius:6px; color:var(--text,#07232b); cursor:pointer;"><span class="ms" style="font-size:15px;">chevron_left</span></button>
+                    <span style="font-size:12px; font-weight:700; min-width:38px; text-align:center;">{{ ebdYearLabel }}</span>
+                    <button onClick="{{ ebdYearNext }}" style="width:24px; height:24px; display:flex; align-items:center; justify-content:center; background:transparent; border:1px solid var(--line,rgba(7,35,43,0.16)); border-radius:6px; color:var(--text,#07232b); cursor:pointer;"><span class="ms" style="font-size:15px;">chevron_right</span></button>
+                  </span>
+                </sc-if>
               </div>
             </div>
             <sc-if value="{{ ebdHasData }}" hint-placeholder-val="{{ true }}">
@@ -653,13 +670,15 @@
                           <span style="display:block; margin-top:3px; font-size:11.5px; color:var(--muted,rgba(7,35,43,0.55));">{{ u.login }} · último acesso {{ u.when }}</span>
                         </span>
                         <span style="padding:4px 10px; border-radius:6px; background:var(--accent-soft,rgba(7,35,43,0.06)); font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:0.14em; color:var(--accent,#c8452a);">{{ u.role }}</span>
+                        <button onClick="{{ u.editPass }}" title="Alterar senha" style="width:28px; height:28px; display:flex; align-items:center; justify-content:center; background:transparent; border:none; border-radius:7px; color:var(--faint,rgba(7,35,43,0.42)); cursor:pointer;" style-hover="color:var(--accent,#c8452a);"><span class="ms" style="font-size:16px;">key</span></button>
                         <button onClick="{{ u.remove }}" title="Excluir usuário" style="width:28px; height:28px; display:flex; align-items:center; justify-content:center; background:transparent; border:none; border-radius:7px; color:var(--faint,rgba(7,35,43,0.42)); cursor:pointer;" style-hover="color:#c8452a;"><span class="ms" style="font-size:16px;">delete</span></button>
                       </div>
                     </sc-for>
                   </div>
-                  <div style="margin-top:12px; padding:16px; border:1px dashed var(--line,rgba(7,35,43,0.18)); border-radius:12px; display:grid; grid-template-columns:1.4fr 1fr 150px auto; gap:10px;">
+                  <div style="margin-top:12px; padding:16px; border:1px dashed var(--line,rgba(7,35,43,0.18)); border-radius:12px; display:grid; grid-template-columns:1.1fr 0.9fr 0.9fr 130px auto; gap:10px;">
                     <input type="text" placeholder="Nome completo" value="{{ fUName }}" onChange="{{ onFUName }}" style="padding:10px 12px; background:var(--input,#fffdf6); border:1px solid var(--line,rgba(7,35,43,0.13)); border-radius:8px; color:var(--text,#07232b); font-size:12.5px; outline:none;" style-focus="border-color:var(--accent,#c8452a);" />
                     <input type="text" placeholder="Login" value="{{ fULogin }}" onChange="{{ onFULogin }}" style="padding:10px 12px; background:var(--input,#fffdf6); border:1px solid var(--line,rgba(7,35,43,0.13)); border-radius:8px; color:var(--text,#07232b); font-size:12.5px; outline:none;" style-focus="border-color:var(--accent,#c8452a);" />
+                    <input type="text" placeholder="Senha" value="{{ fUPass }}" onChange="{{ onFUPass }}" style="padding:10px 12px; background:var(--input,#fffdf6); border:1px solid var(--line,rgba(7,35,43,0.13)); border-radius:8px; color:var(--text,#07232b); font-size:12.5px; outline:none;" style-focus="border-color:var(--accent,#c8452a);" />
                     <select value="{{ fURole }}" onChange="{{ onFURole }}" style="padding:10px 12px; background:var(--input,#fffdf6); border:1px solid var(--line,rgba(7,35,43,0.13)); border-radius:8px; color:var(--text,#07232b); font-size:12.5px; outline:none;">
                       <sc-for list="{{ roleOptions }}" as="ro" hint-placeholder-count="3">
                         <option value="{{ ro }}">{{ ro }}</option>
@@ -667,7 +686,7 @@
                     </select>
                     <button onClick="{{ addUser }}" style="padding:10px 18px; background:var(--accent,#c8452a); color:var(--accent-fg,#ffffff); border:none; border-radius:8px; font-size:12.5px; font-weight:600; cursor:pointer; white-space:nowrap;" style-hover="filter:brightness(1.08);">Criar</button>
                   </div>
-                  <div style="margin-top:10px; font-size:11.5px; color:var(--muted,rgba(7,35,43,0.55));">Administrador altera tudo · Líder altera sob supervisão · Membro apenas visualiza.</div>
+                  <div style="margin-top:10px; font-size:11.5px; color:var(--muted,rgba(7,35,43,0.55));">Administrador altera tudo · Líder altera sob supervisão · Membro apenas visualiza. Clique no ícone de chave para redefinir a senha de alguém.</div>
                 </div>
               </sc-if>
 
@@ -1721,6 +1740,28 @@
   </sc-if>
 
   <!-- ══════════ MODAL: PRESENÇA ══════════ -->
+  <sc-if value="{{ modalPassword }}">
+    <div style="position:fixed; inset:0; background:rgba(9,18,20,0.72); display:flex; align-items:center; justify-content:center; z-index:1000; padding:24px;">
+      <div style="width:100%; max-width:380px; background:var(--panel,#f7f3e7); border:1px solid var(--line,rgba(7,35,43,0.14)); border-radius:16px; padding:28px; animation:ipiFade 0.2s ease both;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:22px;">
+          <h2 style="margin:0; font-family:'Archivo',sans-serif; font-weight:700; font-size:18px; letter-spacing:-0.02em;">{{ passwordModalTitle }}</h2>
+          <button onClick="{{ closeModal }}" style="background:none; border:none; color:var(--faint,rgba(7,35,43,0.42)); cursor:pointer; display:flex;" style-hover="color:var(--text,#07232b);"><span class="ms" style="font-size:22px;">close</span></button>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <label style="display:flex; flex-direction:column; gap:8px;">
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:0.16em; color:var(--faint,rgba(7,35,43,0.42));">NOVA SENHA</span>
+            <input type="text" value="{{ fNewPass }}" onChange="{{ onFNewPass }}" style="padding:11px 13px; background:var(--input,#fffdf6); border:1px solid var(--line,rgba(7,35,43,0.13)); border-radius:9px; color:var(--text,#07232b); font-size:13.5px; outline:none;" style-focus="border-color:var(--accent,#c8452a);" />
+          </label>
+          <label style="display:flex; flex-direction:column; gap:8px;">
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:0.16em; color:var(--faint,rgba(7,35,43,0.42));">CONFIRMAR SENHA</span>
+            <input type="text" value="{{ fNewPass2 }}" onChange="{{ onFNewPass2 }}" style="padding:11px 13px; background:var(--input,#fffdf6); border:1px solid var(--line,rgba(7,35,43,0.13)); border-radius:9px; color:var(--text,#07232b); font-size:13.5px; outline:none;" style-focus="border-color:var(--accent,#c8452a);" />
+          </label>
+          <button onClick="{{ savePassword }}" style="margin-top:4px; padding:12px; background:var(--accent,#c8452a); color:var(--accent-fg,#ffffff); border:none; border-radius:9px; font-size:13.5px; font-weight:600; cursor:pointer;" style-hover="filter:brightness(1.08);">Salvar senha</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
   <sc-if value="{{ modalPresence }}">
     <div style="position:fixed; inset:0; background:rgba(9,18,20,0.72); display:flex; align-items:center; justify-content:center; z-index:1000; padding:24px;">
       <div style="width:100%; max-width:480px; background:var(--panel,#f7f3e7); border:1px solid var(--line,rgba(7,35,43,0.14)); border-radius:16px; padding:28px; animation:ipiFade 0.2s ease both;">
@@ -1981,55 +2022,11 @@ class Component extends DCLogic {
   }
 
   componentDidMount() {
-    import('./rol.js').then(({ MEMBERS, CELLS }) => {
-      const today = new Date();
-      const members = MEMBERS.map(m => {
-        const h = [];
-        if (m.faith) h.push({ date:m.faith, type:'Profissão de fé', text: m.fromChurch !== '—' ? 'Registrada na ' + m.fromChurch + '.' : 'Pública, em culto.' });
-        if (m.baptism) h.push({ date:m.baptism, type:'Batismo', text: m.fromChurch !== '—' ? 'Realizado na ' + m.fromChurch + '.' : 'Realizado nesta igreja.' });
-        if (m.leadership) h.push({ date:m.joined, type:'Liderança', text:'Designado(a) como ' + m.leadership + '.' });
-        return { ...m, history: h.sort((a, b) => a.date < b.date ? -1 : 1) };
-      });
-      const attendance = [];
-      let seed = 17;
-      const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
-      for (let i = 27; i >= 0; i--) {
-        const d = addDays(today, -i), dow = d.getDay(), ds = iso(d);
-        members.forEach(m => {
-          const p = ['SERVIR','MULTIPLICAR','PERTENCER'].includes(m.stage) ? 0.82 : 0.48;
-          if (dow === 0) {
-            if (rnd() < p) attendance.push({ id:'c' + m.id + ds, memberId:m.id, date:ds, type:'CULTO' });
-            if (m.ebd && rnd() < p - 0.18) attendance.push({ id:'e' + m.id + ds, memberId:m.id, date:ds, type:'EBD' });
-          }
-          if ((dow === 3 || dow === 4) && m.cellId && rnd() < p - 0.06) attendance.push({ id:'l' + m.id + ds, memberId:m.id, date:ds, type:'CELULA' });
-        });
-      }
-      const notices = [
-        { id:1, tag:'CULTO', date: iso(addDays(today, -1)), title:'Santa Ceia no primeiro domingo', body:'Culto às 19h com celebração da Ceia. Chegue 15 minutos antes.' },
-        { id:2, tag:'EVENTO', date: iso(addDays(today, -3)), title:'Retiro de discipulado — inscrições abertas', body:'Vagas limitadas. Fale com a liderança da sua célula.' },
-        { id:3, tag:'AÇÃO SOCIAL', date: iso(addDays(today, -6)), title:'Campanha do agasalho', body:'Entrega de doações na secretaria, aos domingos.' }
-      ];
-      const prayers = [
-        { id:1, who:'Liderança', date: iso(addDays(today, -2)), text:'Consolidação das células e formação de novos líderes.', confidential:false, answered:false },
-        { id:2, who:'Reservado', date: iso(addDays(today, -5)), text:'Acompanhamento pastoral de uma família da igreja.', confidential:true, answered:false }
-      ];
-      const MIN_NAMES = ['Ação Social','Acolhimento','Adolescentes e Jovens','Casais','Células','Ensino/EBD','Infantil','Mídia','Música','Obras','Zeladoria']
-        .sort((a, b) => a.localeCompare(b, 'pt-BR'));
-      const byMinistry = n => members.filter(m => (m.ministries || []).some(x => n.toLowerCase().includes(x.toLowerCase()) || x.toLowerCase().includes(n.split('/')[0].toLowerCase())));
-      const ministries = MIN_NAMES.map((name, i) => {
-        const people = byMinistry(name);
-        const lead = people.find(p => p.leadership) || people[0] || null;
-        const since = ['2024-02','2025-01','2024-08','2025-03','2023-11'][i % 5];
-        return { id: i + 1, name, memberIds: people.map(p => p.id),
-          leaderId: lead ? lead.id : null, leaderSince: since, mandateMonths: 24, history: [] };
-      });
-      const users = [
-        { id:1, login:'admin', name:'Admin', role:'Administrador', lastLogin: Date.now() - 24 * 60000 }
-      ];
-      const messages = [];
-      this.setState({ members, cells: CELLS, visitors: [], attendance, reports: [], notices, prayers,
-        ministries, users, messages, theme: this.props.theme || 'light' });
-    });
+    const users = [
+      { id:1, login:'admin', pass:'admin', name:'Admin', role:'Administrador', cellId:null, lastLogin: Date.now() - 24 * 60000 }
+    ];
+    this.setState({ members:[], cells:[], visitors:[], attendance:[], reports:[], notices:[], prayers:[],
+      ministries:[], users, messages:[], theme: this.props.theme || 'light' });
   }
 
   seedDemo() {
@@ -2249,11 +2246,13 @@ class Component extends DCLogic {
 
     // gráficos de linha: cultos e ebd — membros x visitantes por encontro, com período ajustável
     const kindOfAttId = id => { const m = members.find(x => x.id === id); return m ? (m.kind || 'Membro') : 'Membro'; };
-    const PERIODS = [['week','Semana',7], ['month','Mês',30], ['year','Ano',365], ['all','Tudo',null]];
-    const buildLineChart = (typeKey, period) => {
-      const days = (PERIODS.find(p => p[0] === period) || PERIODS[1])[2];
-      const minDate = days ? iso(addDays(today, -days)) : null;
-      const dates = [...new Set(s.attendance.filter(a => a.type === typeKey && (!minDate || a.date >= minDate)).map(a => a.date))].sort();
+    const PERIODS = [['month','Mês',30], ['year','Ano',365], ['all','Tudo',null]];
+    const buildLineChart = (typeKey, period, year) => {
+      const dates0 = [...new Set(s.attendance.filter(a => a.type === typeKey).map(a => a.date))].sort();
+      let minDate = null, maxDate = null;
+      if (period === 'month') minDate = iso(addDays(today, -30));
+      else if (period === 'year') { minDate = year + '-01-01'; maxDate = year + '-12-31'; }
+      const dates = dates0.filter(d => (!minDate || d >= minDate) && (!maxDate || d <= maxDate));
       const rows = dates.map(d => {
         const entries = s.attendance.filter(a => a.type === typeKey && a.date === d);
         return { date:d, m: entries.filter(a => kindOfAttId(a.memberId) !== 'Visitante').length,
@@ -2280,11 +2279,20 @@ class Component extends DCLogic {
     const periodChips = (current, onKey) => PERIODS.map(([key, label]) => ({ label,
       bg: current === key ? accent : 'transparent', fg: current === key ? t.accentFg : t.muted, border: current === key ? accent : t.line,
       go: () => this.setState({ [onKey]: key }) }));
+    const curYear = today.getFullYear();
     const cultoPeriod = s.cultoPeriod || 'month', ebdPeriod = s.ebdPeriod || 'month';
-    const cultoChart = buildLineChart('CULTO', cultoPeriod);
-    const ebdChart = buildLineChart('EBD', ebdPeriod);
+    const cultoYear = s.cultoYear || curYear, ebdYear = s.ebdYear || curYear;
+    const cultoChart = buildLineChart('CULTO', cultoPeriod, cultoYear);
+    const ebdChart = buildLineChart('EBD', ebdPeriod, ebdYear);
     const cultoPeriods = periodChips(cultoPeriod, 'cultoPeriod');
     const ebdPeriods = periodChips(ebdPeriod, 'ebdPeriod');
+    const cultoShowYearNav = cultoPeriod === 'year';
+    const ebdShowYearNav = ebdPeriod === 'year';
+    const cultoYearLabel = String(cultoYear), ebdYearLabel = String(ebdYear);
+    const cultoYearPrev = () => this.setState({ cultoYear: cultoYear - 1 });
+    const cultoYearNext = () => this.setState({ cultoYear: Math.min(curYear, cultoYear + 1) });
+    const ebdYearPrev = () => this.setState({ ebdYear: ebdYear - 1 });
+    const ebdYearNext = () => this.setState({ ebdYear: Math.min(curYear, ebdYear + 1) });
 
     // atenção
     const cultoDates = [...new Set(s.attendance.filter(a => a.type === 'CULTO').map(a => a.date))].sort().slice(-3);
@@ -2646,6 +2654,7 @@ class Component extends DCLogic {
     };
     const userRows = s.users.map(u => ({ ...u, when: rel(Date.now() - u.lastLogin),
       online: (Date.now() - u.lastLogin) < 120000,
+      editPass: () => this.setState({ modal:'password', passwordTargetId: u.id, form:{} }),
       remove: () => this.ask('Excluir ' + u.name + '?', 'O acesso desta pessoa à plataforma será removido. A ação fica registrada no histórico e pode ser desfeita.', 'Excluir usuário',
         () => this.commit('Excluiu o usuário ' + u.name, st => ({ users: st.users.filter(x => x.id !== u.id) }))) }));
     const auditRows = s.audit.slice(0, 40).map(a => ({
@@ -2867,7 +2876,7 @@ class Component extends DCLogic {
 
     return {
       t, donut: 'conic-gradient(' + stops.join(', ') + ')', stages, metrics, attention,
-      cultoPeriods, ebdPeriods,
+      cultoPeriods, ebdPeriods, cultoShowYearNav, ebdShowYearNav, cultoYearLabel, ebdYearLabel, cultoYearPrev, cultoYearNext, ebdYearPrev, ebdYearNext,
       cultoHasData: cultoChart.hasData, cultoNoData: cultoChart.noData, cultoMemberPath: cultoChart.memberPath, cultoVisitorPath: cultoChart.visitorPath,
       cultoMemberPoints: cultoChart.memberPoints, cultoVisitorPoints: cultoChart.visitorPoints, cultoAxisTicks: cultoChart.axisTicks,
       cultoXLabels: cultoChart.xLabels, cultoLabelGrid: cultoChart.labelGrid,
@@ -3212,15 +3221,28 @@ class Component extends DCLogic {
       unreadCount: s.messages.length,
       fUName: f.uName || '', onFUName: e => this.setForm({ uName: e.target.value }),
       fULogin: f.uLogin || '', onFULogin: e => this.setForm({ uLogin: e.target.value }),
+      fUPass: f.uPass || '', onFUPass: e => this.setForm({ uPass: e.target.value }),
       fURole: f.uRole || 'Líder', onFURole: e => this.setForm({ uRole: e.target.value }),
       roleOptions: ['Administrador','Líder','Membro'],
       addUser: () => {
-        if (!f.uName || !f.uLogin) return this.flash('Informe nome e login.');
+        if (!f.uName || !f.uLogin || !f.uPass) return this.flash('Informe nome, login e senha.');
+        if (s.users.some(u => u.login.toLowerCase() === f.uLogin.trim().toLowerCase())) return this.flash('Já existe um usuário com esse login.');
         const id = Math.max(0, ...s.users.map(u => u.id)) + 1;
         this.commit('Criou o usuário ' + f.uName + ' (' + (f.uRole || 'Líder') + ')', st => ({
-          users: st.users.concat([{ id, name:f.uName, login:f.uLogin, role: f.uRole || 'Líder', lastLogin: Date.now() }]),
-          form: { ...st.form, uName:'', uLogin:'' } }));
+          users: st.users.concat([{ id, name:f.uName, login:f.uLogin, pass:f.uPass, role: f.uRole || 'Líder', cellId:null, lastLogin: Date.now() }]),
+          form: { ...st.form, uName:'', uLogin:'', uPass:'' } }));
         this.flash('Usuário criado.');
+      },
+      openMyPassword: () => this.setState({ modal:'password', passwordTargetId:null, form:{} }),
+      passwordModalTitle: s.passwordTargetId ? 'Redefinir senha de ' + (s.users.find(u => u.id === s.passwordTargetId) || {}).name : 'Alterar minha senha',
+      fNewPass: f.newPass || '', onFNewPass: e => this.setForm({ newPass: e.target.value }),
+      fNewPass2: f.newPass2 || '', onFNewPass2: e => this.setForm({ newPass2: e.target.value }),
+      savePassword: () => {
+        if (!f.newPass || f.newPass.length < 4) return this.flash('A senha deve ter ao menos 4 caracteres.');
+        if (f.newPass !== f.newPass2) return this.flash('As senhas não coincidem.');
+        const targetId = s.passwordTargetId || (s.users.find(u => u.name === s.user) || {}).id;
+        this.setState(st => ({ users: st.users.map(u => u.id === targetId ? { ...u, pass: f.newPass } : u), modal:null, form:{}, passwordTargetId:null }));
+        this.flash('Senha atualizada.');
       },
       fMsg: f.msg || '', onFMsg: e => this.setForm({ msg: e.target.value }),
       sendMsg: (this._sendMsg = () => {
@@ -3339,7 +3361,7 @@ class Component extends DCLogic {
       // modais
       modalWeekly: s.modal === 'weekly', modalCellEdit: s.modal === 'cellEdit',
       modalProfile: s.modal === 'profile', modalNewMember: s.modal === 'newMember',
-      modalPresence: s.modal === 'presence', modalNotice: s.modal === 'notice', modalPrayer: s.modal === 'prayer',
+      modalPresence: s.modal === 'presence', modalNotice: s.modal === 'notice', modalPrayer: s.modal === 'prayer', modalPassword: s.modal === 'password',
       closeModal: () => {
         const reset = { modal:null, viewRepId:null, repSelected:[], form:{}, profileId:null, editCellId:null, confirmDelete:false, editingProfile:false, editHistIdx:null, confirmExit:false, confirmCellExit:false, importRows:null, importName:'' };
         const pending = this.dirtyForm() || (s.importRows && s.importRows.length);
@@ -3668,12 +3690,12 @@ class Component extends DCLogic {
 
   tryLogin() {
     const u = this.state.loginUser.trim().toLowerCase(), p = this.state.loginPass;
-    const accounts = {
-      admin: { pass:'admin', name:'Admin', role:'admin', cellId:null }
-    };
-    const a = accounts[u];
-    if (a && a.pass === p) this.setState({ user:a.name, role:a.role, myCellId:a.cellId, page:'dashboard', loginError:false });
-    else this.setState({ loginError:true });
+    const rec = this.state.users.find(x => x.login.toLowerCase() === u);
+    const roleMap = { 'Administrador':'admin', 'Líder':'leader', 'Membro':'member' };
+    if (rec && rec.pass === p) {
+      this.setState(st => ({ user:rec.name, role: roleMap[rec.role] || 'member', myCellId:rec.cellId || null, page:'dashboard', loginError:false,
+        users: st.users.map(x => x.id === rec.id ? { ...x, lastLogin: Date.now() } : x) }));
+    } else this.setState({ loginError:true });
   }
 }
 </script>
